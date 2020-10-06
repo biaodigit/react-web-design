@@ -10,6 +10,9 @@
 
 # production
 /build
+/src/stories
+/.storybook
+/src/**/*.stories.tsx
 
 # misc
 .DS_Store
