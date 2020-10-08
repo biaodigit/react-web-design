@@ -1,32 +1,52 @@
-import * as React from 'react';
+import React, {
+  FC,
+  MouseEventHandler,
+  ButtonHTMLAttributes,
+  AnchorHTMLAttributes,
+} from 'react';
 import classNames from 'classnames';
 
 export type ButtonType = 'primary' | 'default' | 'danger' | 'link';
 export type ButtonSize = 'large' | 'medium' | 'small';
 
 interface BaseButtonProps {
+  /** Button类名 */
   className?: string;
+  /** 禁用Button */
   disabled?: boolean;
   type?: string;
   size?: ButtonSize;
   href?: string;
+  style?: { [key: string]: any };
   children: React.ReactNode;
 }
 
 export type AnchorButtonProps = {
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick?: MouseEventHandler<HTMLElement>;
 } & BaseButtonProps &
-  Omit<React.AnchorHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
+  Omit<AnchorHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
 
 export type NativeButtonProps = {
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick?: MouseEventHandler<HTMLElement>;
 } & BaseButtonProps &
-  Omit<React.ButtonHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
+  Omit<ButtonHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
 
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 
-const Button: React.FC<ButtonProps> = (props) => {
-  const { className, disabled, type, size, href, children, ...rest } = props;
+/**
+ * ## Button组件
+ */
+export const Button: FC<ButtonProps> = (props) => {
+  const {
+    className,
+    disabled,
+    type,
+    size,
+    href,
+    children,
+    style,
+    ...rest
+  } = props;
 
   const classes = classNames('btn', className, {
     [`btn-${type}`]: type,
@@ -42,7 +62,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     );
   } else {
     return (
-      <button className={classes} disabled={disabled} {...rest}>
+      <button style={style} className={classes} disabled={disabled} {...rest}>
         {children}
       </button>
     );
@@ -52,6 +72,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 Button.defaultProps = {
   disabled: false,
   type: 'default',
+  style: {},
 };
 
 export default Button;

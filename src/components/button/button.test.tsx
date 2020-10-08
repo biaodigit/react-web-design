@@ -4,6 +4,7 @@ import Button, { ButtonProps } from './button';
 
 const defaultProps = {
   onClick: jest.fn(),
+  style: { marginLeft: '10px' },
 };
 const testProps: ButtonProps = {
   type: 'primary',
@@ -29,6 +30,7 @@ describe('test Button component', () => {
     expect(element.tagName).toEqual('BUTTON');
     expect(element.disabled).toBeFalsy();
     expect(element).toHaveClass('btn btn-default');
+    expect(element).toHaveStyle('marginLeft:10px');
     fireEvent.click(element);
     expect(defaultProps.onClick).toHaveBeenCalled();
   });
