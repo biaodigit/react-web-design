@@ -1,9 +1,8 @@
 {
   "name": "react-web-design",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "files": [
-    "dist",
-    "package.json"
+    "dist"
   ],
   "dependencies": {
     "@types/node": "^12.0.0",
