@@ -1,6 +1,9 @@
 {
   "name": "react-web-design",
   "version": "0.2.2",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],

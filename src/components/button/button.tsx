@@ -17,16 +17,15 @@ interface BaseButtonProps {
   type?: string;
   size?: ButtonSize;
   href?: string;
-  style?: { [key: string]: any };
-  children: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
-export type AnchorButtonProps = {
+type AnchorButtonProps = {
   onClick?: MouseEventHandler<HTMLElement>;
 } & BaseButtonProps &
   Omit<AnchorHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
 
-export type NativeButtonProps = {
+type NativeButtonProps = {
   onClick?: MouseEventHandler<HTMLElement>;
 } & BaseButtonProps &
   Omit<ButtonHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
