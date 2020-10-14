@@ -26,11 +26,9 @@ let wrapper: RenderResult,
 
 const generateMenu = (props: MenuProps) => (
   <Menu {...props}>
-    <MenuItem index={0}>active</MenuItem>
-    <MenuItem disabled index={1}>
-      disabled
-    </MenuItem>
-    <MenuItem index={2}>default</MenuItem>
+    <MenuItem>active</MenuItem>
+    <MenuItem disabled>disabled</MenuItem>
+    <MenuItem>default</MenuItem>
   </Menu>
 );
 
