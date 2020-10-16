@@ -5,8 +5,8 @@ import {
   fireEvent,
   cleanup,
 } from '@testing-library/react';
-import Menu, { MenuProps } from './menu';
-import MenuItem, { MenuItemProps } from './menuItem';
+import Menu, { MenuProps } from './Menu';
+import MenuItem, { MenuItemProps } from './MenuItem';
 
 const testProps: MenuProps = {
   defaultIndex: 0,

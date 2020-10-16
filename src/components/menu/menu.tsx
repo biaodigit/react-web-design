@@ -1,8 +1,10 @@
 import React, { useState, FC, CSSProperties } from 'react';
 import classNames from 'classnames';
-import { MenuItemProps } from './menuItem';
+import { MenuItemProps } from './MenuItem';
+
 type MenuMode = 'horizontal' | 'vertical';
 type SelectCallback = (selectedIndex: number) => void;
+
 export interface MenuProps {
   defaultIndex?: number;
   className?: string;
@@ -26,6 +28,7 @@ export const Menu: FC<MenuProps> = (props) => {
   const [currentActive, setActive] = useState(defaultIndex);
   const classes = classNames('menu', className, {
     'menu-vertical': Object.is(mode, 'vertical'),
+    'menu-horizontal': Object.is(mode, 'horizontal'),
   });
 
   const handleClick = (index: number) => {
@@ -46,7 +49,7 @@ export const Menu: FC<MenuProps> = (props) => {
         MenuItemProps
       >;
       const { displayName } = childElement.type;
-      if (displayName === 'MenuItem') {
+      if (displayName === 'MenuItem' || displayName === 'SubMenu') {
         return React.cloneElement(childElement, {
           index,
         });

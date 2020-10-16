@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import classNames from 'classnames';
-import { MenuContext } from './menu';
+import { MenuContext } from './Menu';
 
 export interface MenuItemProps {
   index?: number;
@@ -12,6 +12,7 @@ export interface MenuItemProps {
 const MenuItem: FC<MenuItemProps> = (props) => {
   const { index, disabled, className, style, children } = props;
   const context = useContext(MenuContext);
+
   const classes = classNames('menu-item', className, {
     'is-disabled': disabled,
     'is-active': Object.is(context.index, index),
