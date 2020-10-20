@@ -1,5 +1,6 @@
 import React, { useContext, useState, FunctionComponentElement } from 'react';
 import classNames from 'classnames';
+import Icon from '../icon/Icon';
 import { MenuContext } from './Menu';
 import { MenuItemProps } from './MenuItem';
 
@@ -20,6 +21,8 @@ export const SubMenu: React.FC<SubMenuProps> = (props) => {
   const [menuOpen, setOpen] = useState(isOpened);
   const classes = classNames('menu-item submenu-item', className, {
     'is-active': Object.is(context.index, index),
+    'is-opened': menuOpen,
+    'is-vertical': Object.is(context.mode, 'vertical'),
   });
   let timer: any;
 
@@ -69,6 +72,7 @@ export const SubMenu: React.FC<SubMenuProps> = (props) => {
     <li key={index} className={classes} {...hoverEvents}>
       <div className="submenu-title" {...clickEvents}>
         {title}
+        <Icon icon="angle-down" className="arrow-icon" />
       </div>
       {renderChildren()}
     </li>

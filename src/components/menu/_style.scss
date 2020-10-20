@@ -31,14 +31,20 @@
             display: flex;
             align-items: center;
         }
+        .arrow-icon {
+            transition: transform 0.25s ease-in-out;
+            margin-left: 3px;
+        }
+        &:hover {
+            .arrow-icon {
+                transform: rotate(180deg);
+            }
+        }
         .submenu {
-            display: none;
             list-style: none;
             padding-left: 0;
             white-space: nowrap;
-            &.menu-opened {
-                display: block;
-            }
+            transition: opacity 0.5s ease-in;
             .menu-item {
                 padding: $menu-item-padding-y $menu-item-padding-x;
                 cursor: pointer;
@@ -49,6 +55,16 @@
                     color: $menu-item-active-color !important;
                 }
             }
+        }
+    }
+    .is-vertical {
+        .arrow-icon {
+            transform: rotate(0deg) !important;
+        }
+    }
+    .is-vertical.is-opened {
+        .arrow-icon {
+            transform: rotate(180deg) !important;
         }
     }
 }
