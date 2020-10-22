@@ -1,5 +1,6 @@
 import React, { useContext, useState, FunctionComponentElement } from 'react';
 import classNames from 'classnames';
+import { CSSTransition } from 'react-transition-group';
 import Icon from '../icon/Icon';
 import { MenuContext } from './Menu';
 import { MenuItemProps } from './MenuItem';
@@ -55,7 +56,16 @@ export const SubMenu: React.FC<SubMenuProps> = (props) => {
         );
       }
     });
-    return <ul className={subMenuClasses}>{childrenComponent}</ul>;
+    return (
+      <CSSTransition
+        in={menuOpen}
+        timeout={300}
+        classNames="zoom-in-top"
+        // appear
+      >
+        <ul className={subMenuClasses}>{childrenComponent}</ul>
+      </CSSTransition>
+    );
   };
 
   const clickEvents = Object.is(context.mode, 'vertical')

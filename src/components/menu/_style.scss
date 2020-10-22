@@ -35,12 +35,9 @@
             transition: transform 0.25s ease-in-out;
             margin-left: 3px;
         }
-        &:hover {
-            .arrow-icon {
-                transform: rotate(180deg);
-            }
-        }
         .submenu {
+            // display: none;
+            opacity: 0;
             list-style: none;
             padding-left: 0;
             white-space: nowrap;
@@ -54,6 +51,15 @@
                 &:hover {
                     color: $menu-item-active-color !important;
                 }
+            }
+            &.menu-opened {
+                display: block;
+                opacity: 1;
+            }
+        }
+        &:hover {
+            .arrow-icon {
+                transform: rotate(180deg);
             }
         }
     }
