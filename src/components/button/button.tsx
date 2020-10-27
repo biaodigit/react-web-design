@@ -10,8 +10,6 @@ export type ButtonType = 'primary' | 'default' | 'danger' | 'link';
 export type ButtonSize = 'large' | 'medium' | 'small';
 
 interface BaseButtonProps {
-  /** Button类名 */
-  className?: string;
   /** 禁用Button */
   disabled?: boolean;
   type?: string;
