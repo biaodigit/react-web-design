@@ -2,7 +2,7 @@ import React, { FC, ReactElement, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
-type InputSize = 'small' | 'medium' | 'large';
+type InputSize = 'small' | 'large';
 
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLElement>, 'size'> {
