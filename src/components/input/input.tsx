@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
+import Icon from '../icon/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 type InputSize = 'small' | 'large';
@@ -31,7 +32,18 @@ export const Input: FC<InputProps> = (props) => {
     'input-group-append': !!append,
     'input-group-prepend': !!prepend,
   });
-  return <input className={classes} style={style} />;
+  return (
+    <div className={classes} style={style}>
+      {prepend && <div className="input-group-prepend-inner">{prepend}</div>}
+      {icon && (
+        <div className="icon-wrapper">
+          <Icon icon={icon} title={`title-${icon}`} />
+        </div>
+      )}
+      <input disabled={disabled} className="input-inner" {...rest} />
+      {append && <div className="input-group-append-inner">{append}</div>}
+    </div>
+  );
 };
 
 export default Input;
