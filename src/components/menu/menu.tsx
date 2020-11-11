@@ -1,7 +1,7 @@
 import React, { useState, FC, CSSProperties } from 'react';
 import classNames from 'classnames';
-import { SubMenuProps } from './SubMenu';
-import { MenuItemProps } from './MenuItem';
+import { SubMenuProps } from './subMenu';
+import { MenuItemProps } from './menuItem';
 
 type MenuMode = 'horizontal' | 'vertical';
 type SelectCallback = (selectedIndex: string) => void;

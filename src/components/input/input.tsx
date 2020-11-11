@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
-import Icon from '../icon/Icon';
+import Icon from '../icon/icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 type InputSize = 'small' | 'large';
@@ -32,6 +32,19 @@ export const Input: FC<InputProps> = (props) => {
     'input-group-append': !!append,
     'input-group-prepend': !!prepend,
   });
+
+  const fixControlledValue = (value: any) => {
+    if (typeof value === 'undefined' || value === null) {
+      return ''
+    }
+    return value
+  }
+  
+  if ('value' in props) {
+    delete rest.defaultValue
+    rest.value = fixControlledValue(props.value)
+  }
+
   return (
     <div className={classes} style={style}>
       {prepend && <div className="input-group-prepend-inner">{prepend}</div>}

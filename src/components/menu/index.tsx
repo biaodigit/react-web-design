@@ -1,5 +1,5 @@
-import Menu from './Menu';
-import SubMenu from './SubMenu';
-import Item from './MenuItem';
+import Menu from './menu';
+import SubMenu from './subMenu';
+import Item from './menuItem';
 
 export default Menu;

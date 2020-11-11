@@ -3,13 +3,24 @@ import {
   render,
   RenderResult,
   fireEvent,
-  cleanup,
-  wait,
   waitFor,
 } from '@testing-library/react';
-import Menu, { MenuProps } from './Menu';
-import MenuItem, { MenuItemProps } from './MenuItem';
-import SubMenu, { SubMenuProps } from './SubMenu';
+import Menu, { MenuProps } from './menu';
+import MenuItem, { MenuItemProps } from './menuItem';
+import SubMenu, { SubMenuProps } from './subMenu';
+
+jest.mock('../icon/icon', () => {
+  return () => {
+    return <i className="fa" />;
+  };
+});
+jest.mock('react-transition-group', () => {
+  return {
+    CSSTransition: (props: any) => {
+      return props.children;
+    },
+  };
+});
 
 const testProps: MenuProps = {
   defaultIndex: '0',
@@ -32,7 +43,7 @@ let wrapper: RenderResult,
 const generateMenu = (props: MenuProps) => (
   <Menu {...props}>
     <MenuItem>active</MenuItem>
-    <MenuItem disabled>disabled</MenuItem>
+    <MenuItem disabled>disable</MenuItem>
     <MenuItem>default</MenuItem>
     <SubMenu title="dropdown">
       <MenuItem>dropdown1</MenuItem>
@@ -63,7 +74,7 @@ describe('test Menu Component', () => {
     wrapper.container.appendChild(createStyleFile());
     menuElement = wrapper.getByTestId('test-menu');
     activeElement = wrapper.getByText('active');
-    disabledElement = wrapper.getByText('disabled');
+    disabledElement = wrapper.getByText('disable');
   });
   it('render default menu', () => {
     expect(menuElement).toBeInTheDocument();
