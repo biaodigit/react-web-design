@@ -28,7 +28,7 @@ class Notification extends React.Component<
   NotificationProps,
   NotificationState
 > {
-  static newInstance: () => void
+  static newInstance: (properties: NotificationProps) => void
 
   static defaultProps = {
     prefixCls: 'rc-notification'
@@ -80,10 +80,20 @@ class Notification extends React.Component<
   }
 }
 
-Notification.newInstance = () => {
+Notification.newInstance = (properties) => {
+  const {...props} = properties
   const div = document.createElement('div')
   document.body.appendChild(div)
-  ReactDOM.render(<Notification ref={() => {}} />, div)
+  const notification = ReactDOM.render(<Notification {...props} />, div)
+
+  return {
+    notice (noticeProps: NoticeContent) {
+      notification.add(noticeProps)
+    },
+    remove () {
+      
+    }
+  }
 }
 
 export default Notification
