@@ -2,6 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Notice, { NoticeProps } from './Notice'
 
+type NoticeFunc = (noticeProps: NoticeContent) => void
+
+export interface NotificationInstance {
+  notice: NoticeFunc
+  removeNotice: (key: React.Key) => void;
+  destroy: () => void
+}
+
 interface NotificationProps {
   prefixCls?: string;
   className?: string;
@@ -28,12 +36,11 @@ class Notification extends React.Component<
   NotificationProps,
   NotificationState
 > {
-  static newInstance: (properties: NotificationProps) => void
+  static newInstance: (properties: NotificationProps, callback:(instance: NotificationInstance) => void) => void
 
   static defaultProps = {
     prefixCls: 'rc-notification'
   }
-
 
   public add(originNotice: NoticeContent) {
     const key = originNotice.key || getUuid()
@@ -80,20 +87,29 @@ class Notification extends React.Component<
   }
 }
 
-Notification.newInstance = (properties) => {
+Notification.newInstance = (properties,callback) => {
   const {...props} = properties
   const div = document.createElement('div')
   document.body.appendChild(div)
-  const notification = ReactDOM.render(<Notification {...props} />, div)
 
-  return {
-    notice (noticeProps: NoticeContent) {
-      notification.add(noticeProps)
-    },
-    remove () {
-      
-    }
+  function ref (notification:Notification) {
+    callback({
+      notice(noticeProps) {
+        notification.add(noticeProps)
+      },
+      removeNotice (key) {
+        notification.remove(key)
+      },
+      destroy () {
+        ReactDOM.unmountComponentAtNode(div)
+        if (div.parentNode) {
+          div.parentNode.removeChild(div)
+        }
+      }
+    })
   }
+
+  ReactDOM.render(<Notification {...props} ref={ref}/>, div)
 }
 
 export default Notification
