@@ -39,9 +39,15 @@ class Notification extends React.Component<
   static newInstance: (properties: NotificationProps, callback:(instance: NotificationInstance) => void) => void
 
   static defaultProps = {
-    prefixCls: 'rc-notification'
+    prefixCls: 'notification'
   }
-
+  
+  constructor (props) {
+    super(props)
+    this.state = {
+      notices: []
+    }
+  }
   public add(originNotice: NoticeContent) {
     const key = originNotice.key || getUuid()
     const notice: NoticeContent = {
@@ -53,6 +59,8 @@ class Notification extends React.Component<
     const updateNotices = notices.concat()
     if (idx !== -1) {
       updateNotices.splice(idx, 1, { notice })
+    } else {
+      updateNotices.push({notice})
     }
     this.setState({notices: updateNotices})
   }
@@ -83,7 +91,7 @@ class Notification extends React.Component<
     })
   }
   public render() {
-    return <div>{this.getNoticeDom()}</div>
+    return <div className="notification">{this.getNoticeDom()}</div>
   }
 }
 
@@ -92,9 +100,14 @@ Notification.newInstance = (properties,callback) => {
   const div = document.createElement('div')
   document.body.appendChild(div)
 
-  function ref (notification:Notification) {
+  let called = false;
+  function ref (notification: Notification) {
+    if (called) return;
+
+    called = true
     callback({
-      notice(noticeProps) {
+      notice (noticeProps) {
+        console.log('props:', noticeProps)
         notification.add(noticeProps)
       },
       removeNotice (key) {

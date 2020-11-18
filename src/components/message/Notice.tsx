@@ -18,10 +18,10 @@ class Notice extends React.Component<NoticeProps, NoticeState> {
   private closeTimer?: number | null
 
   static defaultProps = {
-    duration: 3000
+    duration: 30000
   }
 
-  constructor (props:NoticeProps) {
+  constructor (props) {
     super(props)
     this.state = {
       shouldClose: false

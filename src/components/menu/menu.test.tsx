@@ -49,7 +49,7 @@ const generateMenu = (props: MenuProps) => (
       <MenuItem>dropdown1</MenuItem>
     </SubMenu>
     <SubMenu title="opened">
-      <MenuItem>opened1</MenuItem>
+      <MenuItem>opened2</MenuItem>
     </SubMenu>
   </Menu>
 );
@@ -131,6 +131,6 @@ describe('test Menu and MenuItem component in vertical mode', () => {
   });
 
   it('should show subMenu dropdown when defaultOpenSubMenus contains SubMenu index', () => {
-    expect(ver_wrapper.getByText('opened1')).toBeVisible();
+    expect(ver_wrapper.getByText('opened2')).toBeVisible();
   });
 });

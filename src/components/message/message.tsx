@@ -12,32 +12,55 @@ const getNotificationInstance = (
     return
   }
 
-  Notification.newInstance({}, (instance: NotificationInstance) => cb && cb(instance))
+  Notification.newInstance(
+    {},
+    (instance: NotificationInstance) => cb && cb(instance)
+  )
 }
 
-const notice = (type: string, content: React.ReactNode, duration?: number, onClose?:() => void) => {
+const getNoticeProps = () => {
+  
+}
+
+const notice = (
+  type: string,
+  content: React.ReactNode,
+  duration?: number,
+  onClose?: () => void
+) => {
+  console.log(content)
   getNotificationInstance((instance: NotificationInstance) => {
     messageNotification = instance
     instance.notice({
       content,
       duration,
-      onClose () {
+      onClose() {
         onClose && onClose()
         instance.destroy()
         messageNotification = null
       }
     })
-   })
+  })
 }
 
 export default {
-  info: (content: React.ReactNode, duration?:number) => {
-    notice('info', content, duration)
+  info: (content: React.ReactNode, duration?: number, onClose?: () => void) => {
+    notice('info', content, duration, onClose)
   },
-  success: (content: React.ReactNode, duration?:number) => {
-    notice('success', content, duration)
+  success: (
+    content: React.ReactNode,
+    duration?: number,
+    onClose?: () => void
+  ) => {
+    notice('success', content, duration, onClose)
   },
-  warning: (content: React.ReactNode) => {},
+  warning: (
+    content: React.ReactNode,
+    duration?: number,
+    onClose?: () => void
+  ) => {
+    notice('warning', content, duration, onClose)
+  },
   hide: () => {
     messageNotification && messageNotification.destroy()
   }

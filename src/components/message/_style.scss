@@ -1,0 +1,36 @@
+$toastPrefixCls: notification;
+
+.#{$toastPrefixCls} {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 99;
+  font-size: 42px;
+  text-align: center;
+  transform: translateZ(1px);
+  &-notice {
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+    background-color: black;
+    opacity: 0.5;
+    .#{$toastPrefixCls}-info {
+      line-height: 0.8rem;
+      padding: 0 0.3rem;
+    }
+    .#{$toastPrefixCls}-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0.3rem 0.4rem;
+      .content {
+        font-size: 14px;
+      }
+    }
+  }
+}
