@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 export interface NoticeProps {
   content: React.ReactNode
-  duration?: number
+  duration?: number | null
   prefixCls: string
   className?: string
   onClose?: () => void

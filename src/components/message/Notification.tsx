@@ -19,7 +19,7 @@ interface NotificationState {
   notices: { notice: NoticeContent }[]
 }
 
-interface NoticeContent
+export interface NoticeContent
   extends Omit<NoticeProps, 'prefixCls' | 'onClose'> {
   prefixCls?: string
   key?: React.Key
