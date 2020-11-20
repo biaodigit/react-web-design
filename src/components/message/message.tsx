@@ -2,6 +2,11 @@ import React from 'react'
 import classNames from 'classnames'
 import Notification, { NotificationInstance, NoticeContent } from './Notification'
 
+type ConfigContent = React.ReactNode | string
+type ConfigDuration = number | (() => void)
+type ConfigOnClose = () => void
+type JoinContent = ConfigContent | ArgProps
+
 interface ArgProps {
   content: React.ReactNode
   duration: number | null
@@ -9,7 +14,21 @@ interface ArgProps {
   onClose?: () => void 
 }
 
+interface MessageApi {
+  info (content: JoinContent, duration?: ConfigDuration, onClose?: ConfigOnClose): void 
+  success (content: JoinContent, duration?: ConfigDuration, onClose?: ConfigOnClose): void 
+  warning (content: JoinContent, duration?: ConfigDuration, onClose?: ConfigOnClose): void 
+  error (content: JoinContent, duration?: ConfigDuration, onClose?: ConfigOnClose): void 
+  loading (content: JoinContent, duration?: ConfigDuration, onClose?: ConfigOnClose): void 
+  open (args: ArgProps): void
+  destroy(messageKey:React.Key):void
+}
+
 let messageNotification: NotificationInstance | null
+
+function isArgsProps (content: JoinContent): content is ArgProps {
+  return (Object.prototype.toString.call(content) === '[object Object]' && !!(content as ArgProps).content)
+}
 
 const getNotificationInstance = (
   cb: (notification: NotificationInstance) => void
@@ -46,25 +65,36 @@ const notice = (args:ArgProps) => {
   })
 }
 
-export default {
-  info: (content: React.ReactNode, duration?: number, onClose?: () => void) => {
-    // notice('info', content, duration, onClose)
-  },
-  success: (
-    content: React.ReactNode,
-    duration?: number,
-    onClose?: () => void
-  ) => {
-    // notice('success', content, duration, onClose)
-  },
-  warning: (
-    content: React.ReactNode,
-    duration?: number,
-    onClose?: () => void
-  ) => {
-    // notice('warning', content, duration, onClose)
-  },
-  hide: () => {
-    messageNotification && messageNotification.destroy()
+
+const api = {
+  open: notice,
+  destroy: (messageKey:React.Key) => {
+    if (messageNotification) {
+      if (messageKey) {
+        messageNotification.removeNotice(messageKey)
+      } else {
+        messageNotification.destroy()
+        messageNotification = null
+      }
+    }
   }
 }
+
+const attachTypeApi = (originApi:any,type:string) => {
+  originApi[type] = (content: JoinContent, duration?: ConfigDuration, onClose?: ConfigOnClose) => {
+    if (isArgsProps(content)) {
+      originApi.open(content)
+    }
+
+    if (typeof duration === 'function') {
+      onClose = duration
+      duration = undefined
+    }
+
+    originApi.open({content,duration,onClose})
+  }
+}
+
+['info','success','warning','loading'].forEach(type => attachTypeApi(api,type))
+
+export default api as MessageApi

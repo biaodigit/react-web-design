@@ -107,7 +107,6 @@ Notification.newInstance = (properties,callback) => {
     called = true
     callback({
       notice (noticeProps) {
-        console.log('props:', noticeProps)
         notification.add(noticeProps)
       },
       removeNotice (key) {
