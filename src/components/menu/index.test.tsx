@@ -5,11 +5,11 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
-import Menu, { MenuProps } from './menu';
-import MenuItem, { MenuItemProps } from './menuItem';
-import SubMenu, { SubMenuProps } from './subMenu';
+import Menu, { MenuProps } from './Menu';
+import MenuItem, { MenuItemProps } from './MenuItem';
+import SubMenu, { SubMenuProps } from './SubMenu';
 
-jest.mock('../icon/icon', () => {
+jest.mock('../icon/Icon', () => {
   return () => {
     return <i className="fa" />;
   };

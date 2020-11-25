@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
-import Icon from '../icon/icon';
+import Icon from '../icon/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 type InputSize = 'small' | 'large';
