@@ -1,15 +1,23 @@
-import React, { FC, useState, ChangeEvent } from 'react'
+import React, { FC, useState, ChangeEvent, ReactElement } from 'react'
 import Input, { InputProps } from '../input/Input'
 
-export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
-    fetchSuggestions: (str: string) => string[]
-    onSelect?: (item: string) => void
+interface DataSourceObject {
+    value:string
 }
 
+export type DataSourceType<T = {}> = T & DataSourceObject
+
+export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
+    fetchSuggestions: (str: string) => DataSourceType[]
+    onSelect?: (item: DataSourceType) => void
+    renderOption?: (item: DataSourceType) => ReactElement
+}
+
+
 const AutoComplete: FC<AutoCompleteProps> = (props) => {
-    const { fetchSuggestions, onSelect, value, ...rest } = props
+    const { fetchSuggestions, onSelect, renderOption, value, ...rest } = props
     const [inputValue, setInputValue] = useState(value)
-    const [suggestions, setSuggestions] = useState<string[]>([])
+    const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
@@ -22,23 +30,26 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
         }
     }
 
-    const handleSelect = (item: string) => {
-        setInputValue(item)
+    const handleSelect = (item: DataSourceType) => {
+        setInputValue(item.value)
         setSuggestions([])
         if (onSelect) {
             onSelect(item)
         }
     }
 
+    const renderTemplate = (item: DataSourceType) => {
+        return renderOption ? renderOption(item) : item.value
+      }
+
     const generateDropdown = () => (
         <ul>
             {suggestions.map((item, index) => (
-                <li key={index} onClick={() => handleSelect(item)}>{item}</li>
+                <li key={index} onClick={() => handleSelect(item)}>{renderTemplate(item)}</li>
             ))}
         </ul>
     )
 
-    console.log(suggestions)
     return (
         <div className="auto-complete">
             <Input value={inputValue} onChange={handleChange} {...rest} />
