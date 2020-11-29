@@ -1,14 +1,16 @@
-import React, { FC, useState, ChangeEvent, ReactElement } from 'react'
+import React, { FC, useState, useEffect, ChangeEvent, ReactElement } from 'react'
 import Input, { InputProps } from '../input/Input'
+import Icon from '../icon/Icon'
+import useDebounce from '../_utils/hooks/useDebounce'
 
 interface DataSourceObject {
-    value:string
+    value: string
 }
 
 export type DataSourceType<T = {}> = T & DataSourceObject
 
 export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
-    fetchSuggestions: (str: string) => DataSourceType[]
+    fetchSuggestions: (str: string) => DataSourceType[] | Promise<DataSourceType[]>
     onSelect?: (item: DataSourceType) => void
     renderOption?: (item: DataSourceType) => ReactElement
 }
@@ -16,18 +18,31 @@ export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
 
 const AutoComplete: FC<AutoCompleteProps> = (props) => {
     const { fetchSuggestions, onSelect, renderOption, value, ...rest } = props
-    const [inputValue, setInputValue] = useState(value)
+    const [inputValue, setInputValue] = useState<string>(value as string)
     const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
+    const [loading, setLoading] = useState(false)
+    const debounceValue = useDebounce(inputValue, 500)
+
+    useEffect(() => {
+        if (debounceValue) {
+            const results = fetchSuggestions(debounceValue)
+            if (results instanceof Promise) {
+                setLoading(true)
+                results.then(data => {
+                    setLoading(false)
+                    setSuggestions(data)
+                })
+            } else {
+                setSuggestions(results)
+            }
+        } else {
+            setSuggestions([])
+        }
+    }, [debounceValue])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         setInputValue(value)
-        if (value) {
-            const result = fetchSuggestions(value)
-            setSuggestions(result)
-        } else {
-            setSuggestions([])
-        }
     }
 
     const handleSelect = (item: DataSourceType) => {
@@ -40,7 +55,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
     const renderTemplate = (item: DataSourceType) => {
         return renderOption ? renderOption(item) : item.value
-      }
+    }
 
     const generateDropdown = () => (
         <ul>
@@ -53,6 +68,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     return (
         <div className="auto-complete">
             <Input value={inputValue} onChange={handleChange} {...rest} />
+            {loading && <ul><Icon icon="spinner" spin /></ul>}
             {suggestions.length > 0 ? generateDropdown() : null}
         </div>
     )
