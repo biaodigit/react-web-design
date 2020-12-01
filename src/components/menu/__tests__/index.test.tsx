@@ -5,9 +5,9 @@ import {
   fireEvent,
   waitFor,
 } from '@testing-library/react';
-import Menu, { MenuProps } from './Menu';
-import MenuItem, { MenuItemProps } from './MenuItem';
-import SubMenu, { SubMenuProps } from './SubMenu';
+import Menu, { MenuProps } from '../Menu';
+import MenuItem, { MenuItemProps } from '../MenuItem';
+import SubMenu, { SubMenuProps } from '../SubMenu';
 
 jest.mock('../icon/Icon', () => {
   return () => {
