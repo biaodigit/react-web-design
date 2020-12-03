@@ -1,4 +1,3 @@
-import { clear } from 'console'
 import { useState, useEffect } from 'react'
 
 function useDebounce(value: any, delay = 300) {

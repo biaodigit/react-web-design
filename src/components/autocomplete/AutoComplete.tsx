@@ -1,8 +1,9 @@
-import React, { FC, useState, useEffect, ChangeEvent, KeyboardEvent, ReactElement } from 'react'
+import React, { FC, useState, useEffect, useRef, ChangeEvent, KeyboardEvent, ReactElement } from 'react'
 import classNames from 'classnames'
 import Input, { InputProps } from '../input/Input'
 import Icon from '../icon/Icon'
 import useDebounce from '../_utils/hooks/useDebounce'
+import useClickOutside from '../_utils/hooks/useClickOutside'
 
 interface DataSourceObject {
     value: string
@@ -23,10 +24,13 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
     const [loading, setLoading] = useState(false)
     const [highlightIndex, setHighlightIndex] = useState(-1)
+    const triggerSearch = useRef(false)
+    const componentRef = useRef<HTMLDivElement>(null)
     const debounceValue = useDebounce(inputValue, 500)
 
+    useClickOutside(componentRef, () => { setSuggestions([]) })
     useEffect(() => {
-        if (debounceValue) {
+        if (debounceValue && triggerSearch.current) {
             const results = fetchSuggestions(debounceValue)
             if (results instanceof Promise) {
                 setLoading(true)
@@ -46,6 +50,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         setInputValue(value)
+        triggerSearch.current = true
     }
 
     const handleSelect = (item: DataSourceType) => {
@@ -54,6 +59,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
         if (onSelect) {
             onSelect(item)
         }
+        triggerSearch.current = false
     }
 
     const highlight = (index: number) => {
@@ -103,7 +109,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     )
 
     return (
-        <div className="auto-complete">
+        <div className="auto-complete" ref={componentRef}>
             <Input value={inputValue} onChange={handleChange} onKeyDown={handleKeyDown} {...rest} />
             {loading && <ul><Icon icon="spinner" spin /></ul>}
             {suggestions.length > 0 ? generateDropdown() : null}
