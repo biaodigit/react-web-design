@@ -30,6 +30,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
     useClickOutside(componentRef, () => { setSuggestions([]) })
     useEffect(() => {
+        setSuggestions([])
         if (debounceValue && triggerSearch.current) {
             const results = fetchSuggestions(debounceValue)
             if (results instanceof Promise) {
@@ -96,7 +97,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     }
 
     const generateDropdown = () => (
-        <ul>
+        <ul className="suggestion-list">
             {suggestions.map((item, index) => {
                 const cnames = classNames('suggestion-item', {
                     'item-highlighted': index === highlightIndex
