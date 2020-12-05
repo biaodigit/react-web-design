@@ -9,7 +9,7 @@ import Menu, { MenuProps } from '../Menu';
 import MenuItem, { MenuItemProps } from '../MenuItem';
 import SubMenu, { SubMenuProps } from '../SubMenu';
 
-jest.mock('../icon/Icon', () => {
+jest.mock('../../icon/Icon', () => {
   return () => {
     return <i className="fa" />;
   };

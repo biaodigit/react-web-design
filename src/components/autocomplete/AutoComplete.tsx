@@ -70,7 +70,6 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     }
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-        console.log(e.keyCode)
         switch (e.keyCode) {
             case 13:
                 if (suggestions[highlightIndex]) {
@@ -100,7 +99,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
         <ul className="suggestion-list">
             {suggestions.map((item, index) => {
                 const cnames = classNames('suggestion-item', {
-                    'item-highlighted': index === highlightIndex
+                    'is-active': index === highlightIndex
                 })
                 return (
                     <li key={index} className={cnames} onClick={() => handleSelect(item)}>{renderTemplate(item)}</li>
