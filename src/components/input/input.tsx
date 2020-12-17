@@ -25,6 +25,7 @@ export const Input: FC<InputProps> = (props) => {
     style,
     ...rest
   } = props;
+
   const classes = classNames('input-wrapper', className, {
     [`input-size-${size}`]: size,
     'is-disabled': disabled,
@@ -39,7 +40,7 @@ export const Input: FC<InputProps> = (props) => {
     }
     return value
   }
-  
+
   if ('value' in props) {
     delete rest.defaultValue
     rest.value = fixControlledValue(props.value)

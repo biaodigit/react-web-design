@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames'
 
 export interface NoticeProps {
@@ -9,66 +9,46 @@ export interface NoticeProps {
   onClose?: () => void
 }
 
-interface NoticeState {
-  shouldClose: boolean
-}
+const Notice: React.FC<NoticeProps> = (props) => {
+  const { content, prefixCls, duration = 3000, onClose } = props
+  let timer: number = 0
+  let closeTimer: number | null = null
 
-class Notice extends React.Component<NoticeProps, NoticeState> {
-  private timer?: number
-  private closeTimer?: number | null
+  useEffect(() => {
+    startCloserTimer()
+    return () => {
+      clearCloseTimer()
+    }
+  })
 
-  static defaultProps = {
-    duration: 30000
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      shouldClose: false
+  const startCloserTimer = () => {
+    if (duration) {
+      closeTimer = window.setTimeout(() => {
+        close()
+      }, duration - 300)
     }
   }
-  
-  public componentDidMount () {
-   this.startCloseTimer()
-  }
 
-  private close () {
-    this.clearCloseTimer()
+  const close = () => {
+    clearCloseTimer()
 
-    this.timer = window.setTimeout(() => {
-      if (this.props.onClose) {
-        this.props.onClose()
+    timer = window.setTimeout(() => {
+      if (onClose) {
+        onClose()
       }
-      clearTimeout(this.timer)
-    } ,300)
+      clearTimeout(timer)
+    }, 300)
   }
 
-  private startCloseTimer () {
-    if (this.props.duration) {
-      this.closeTimer = window.setTimeout(() => {
-         this.close()
-       }, this.props.duration - 300)
+  const clearCloseTimer = () => {
+    if (closeTimer) {
+      clearTimeout(closeTimer)
+      closeTimer = null
     }
   }
 
-  private clearCloseTimer () {
-    if (this.closeTimer) {
-      clearTimeout(this.closeTimer)
-      this.closeTimer = null
-    }
-  }
-
-  public render () {
-    const { prefixCls, className } = this.props
-    const classes = classNames(`${prefixCls}-notice`, className)
-    return <div className={classes}>
-      {this.props.content}
-    </div>
-  }
-
-  public componentWillUnmount () {
-    this.clearCloseTimer()
-  }
+  const classes = classNames(`${prefixCls}-notice`)
+  return <div className={classes}>{content}</div>
 }
 
 export default Notice;

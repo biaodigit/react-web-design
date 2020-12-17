@@ -6,6 +6,7 @@ const defaultProps: InputProps = {
   onChange: jest.fn(),
   placeholder: 'test-input',
 };
+
 describe('test Input component', () => {
   it('should render the correct default Input', () => {
     render(<Input {...defaultProps} />);
@@ -26,7 +27,7 @@ describe('test Input component', () => {
   });
   it('should render different input sizes on size property', () => {
     const wrapper = render(<Input placeholder="sizes" size="large" />)
-    const container= wrapper.container.querySelector('.input-wrapper')
+    const container = wrapper.container.querySelector('.input-wrapper')
     expect(container).toHaveClass('input-size-large')
   });
   it('should render prepand and append element on prepand/append property', () => {
