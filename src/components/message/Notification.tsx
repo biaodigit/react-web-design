@@ -1,18 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import classNames from 'classnames'
 import Notice, { NoticeProps } from './Notice'
 
 type NoticeFunc = (noticeProps: NoticeContent) => void
 
 export interface NotificationInstance {
   notice: NoticeFunc
-  removeNotice: (key: React.Key) => void;
+  removeNotice: (key: React.Key) => void
   destroy: () => void
 }
 
 interface NotificationProps {
-  prefixCls?: string;
-  className?: string;
+  prefixCls?: string
+  className?: string
 }
 
 interface NotificationState {
@@ -20,8 +21,9 @@ interface NotificationState {
 }
 
 export interface NoticeContent
-  extends Omit<NoticeProps, 'prefixCls' | 'onClose'> {
+  extends Omit<NoticeProps, 'prefixCls' | 'duration' | 'onClose'> {
   prefixCls?: string
+  duration?: number
   key?: React.Key
   onClose?: () => void
 }
@@ -36,13 +38,16 @@ class Notification extends React.Component<
   NotificationProps,
   NotificationState
 > {
-  static newInstance: (properties: NotificationProps, callback:(instance: NotificationInstance) => void) => void
+  static newInstance: (
+    properties: NotificationProps,
+    callback: (instance: NotificationInstance) => void
+  ) => void
 
   static defaultProps = {
     prefixCls: 'notification'
   }
-  
-  constructor (props) {
+
+  constructor(props) {
     super(props)
     this.state = {
       notices: []
@@ -60,21 +65,21 @@ class Notification extends React.Component<
     if (idx !== -1) {
       updateNotices.splice(idx, 1, { notice })
     } else {
-      updateNotices.push({notice})
+      updateNotices.push({ notice })
     }
-    this.setState({notices: updateNotices})
+    this.setState({ notices: updateNotices })
   }
 
-  public remove (removeKey: React.Key) {
+  public remove(removeKey: React.Key) {
     this.setState(({ notices }) => ({
       notices: notices.filter(({ notice: { key } }) => key !== removeKey)
     }))
   }
 
-  private getNoticeDom () {
+  private getNoticeDom() {
     const { notices } = this.state
-    const {prefixCls} = this.props
-    return notices.map(v => {
+    const { prefixCls } = this.props
+    return notices.map((v) => {
       const noticeProps = {
         prefixCls,
         ...v.notice
@@ -87,32 +92,34 @@ class Notification extends React.Component<
         }
       }
 
-      return <Notice {...noticeProps} onClose={closeCb}/>
+      return <Notice {...noticeProps} onClose={closeCb} />
     })
   }
   public render() {
-    return <div className="notification">{this.getNoticeDom()}</div>
+    const { prefixCls } = this.props
+    const classes = classNames(prefixCls)
+    return <div className={classes}>{this.getNoticeDom()}</div>
   }
 }
 
-Notification.newInstance = (properties,callback) => {
-  const {...props} = properties
+Notification.newInstance = (properties, callback) => {
+  const { ...props } = properties
   const div = document.createElement('div')
   document.body.appendChild(div)
 
-  let called = false;
-  function ref (notification: Notification) {
-    if (called) return;
+  let called = false
+  function ref(notification: Notification) {
+    if (called) return
 
     called = true
     callback({
-      notice (noticeProps) {
+      notice(noticeProps) {
         notification.add(noticeProps)
       },
-      removeNotice (key) {
+      removeNotice(key) {
         notification.remove(key)
       },
-      destroy () {
+      destroy() {
         ReactDOM.unmountComponentAtNode(div)
         if (div.parentNode) {
           div.parentNode.removeChild(div)
@@ -121,7 +128,7 @@ Notification.newInstance = (properties,callback) => {
     })
   }
 
-  ReactDOM.render(<Notification {...props} ref={ref}/>, div)
+  ReactDOM.render(<Notification {...props} ref={ref} />, div)
 }
 
 export default Notification

@@ -1,6 +1,4 @@
-$toastPrefixCls: notification;
-
-.#{$toastPrefixCls} {
+.#{$prefix}-message {
   position: fixed;
   display: flex;
   flex-direction: column;

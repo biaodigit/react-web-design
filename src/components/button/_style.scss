@@ -1,4 +1,4 @@
-.btn {
+.#{$prefix}-btn {
     position: relative;
     display: inline-block;
     font-weight: $btn-font-weight;
@@ -24,27 +24,27 @@
     }
 }
 
-.btn-large {
+.#{$prefix}-btn-large {
     @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
 }
 
-.btn-small {
+.#{$prefix}-btn-small {
     @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
 }
 
-.btn-primary {
+.#{$prefix}-btn-primary {
     @include button-style($primary, $primary, $white);
 }
 
-.btn-danger {
+.#{$prefix}-btn-danger {
     @include button-style($danger, $danger, $white);
 }
 
-.btn-default {
+.#{$prefix}-btn-default {
     @include button-style($white, $gray-400, $body-color, $white, $primary, $primary);
 }
 
-.btn-link {
+.#{$prefix}-btn-link {
     font-weight: $font-weight-normal;
     color: $btn-link-color;
     text-decoration: $link-decoration;

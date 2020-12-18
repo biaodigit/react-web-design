@@ -45,9 +45,9 @@ export const Button: FC<ButtonProps> = (props) => {
     ...rest
   } = props;
 
-  const classes = classNames('btn', className, {
-    [`btn-${type}`]: type,
-    [`btn-${size}`]: size,
+  const classes = classNames('web-btn', className, {
+    [`web-btn-${type}`]: type,
+    [`web-btn-${size}`]: size,
     disabled: Object.is(type, 'link') && disabled,
   });
 

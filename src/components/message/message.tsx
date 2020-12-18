@@ -7,9 +7,11 @@ type ConfigDuration = number | (() => void)
 type ConfigOnClose = () => void
 type JoinContent = ConfigContent | ArgProps
 
+const localPrefixCls = 'web-message'
+
 interface ArgProps {
   content: React.ReactNode
-  duration: number | null
+  duration?: number
   prefixCls?:string
   onClose?: () => void 
 }
@@ -31,22 +33,26 @@ function isArgsProps (content: JoinContent): content is ArgProps {
 }
 
 const getNotificationInstance = (
-  cb: (notification: NotificationInstance) => void
+  args: ArgProps,
+  cb: ({ prefixCls: string, instance: NotificationInstance }) => void
 ) => {
+  let prefixCls = args.prefixCls || localPrefixCls
   if (messageNotification) {
-    cb(messageNotification)
+    cb({ prefixCls, instance: messageNotification })
     return
   }
 
   Notification.newInstance(
-    {},
-    (instance: NotificationInstance) => cb && cb(instance)
+    {
+      prefixCls
+    },
+    (instance: NotificationInstance) => cb && cb({ prefixCls, instance })
   )
 }
 
-const getNoticeProps = (args:ArgProps):NoticeContent => {
+const getNoticeProps = (args:ArgProps, prefixCls:string):NoticeContent => {
   const duration = args.duration !== undefined ? args.duration : 3000
-  const classes = classNames('notification-content',{})
+  const classes = classNames(`${prefixCls}-content`,{})
   return {
     duration,
     content: (
@@ -59,9 +65,9 @@ const getNoticeProps = (args:ArgProps):NoticeContent => {
 }
 
 const notice = (args:ArgProps) => {
-  getNotificationInstance((instance: NotificationInstance) => {
+  getNotificationInstance(args, ({ prefixCls,instance}) => {
     messageNotification = instance
-    instance.notice(getNoticeProps(args))
+    instance.notice(getNoticeProps(args,prefixCls))
   })
 }
 
