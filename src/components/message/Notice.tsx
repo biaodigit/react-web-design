@@ -3,14 +3,15 @@ import classNames from 'classnames'
 
 export interface NoticeProps {
   content: React.ReactNode
+  noticeKey: React.Key
   duration?: number | null
   prefixCls: string
   className?: string
-  onClose?: () => void
+  onClose?: (key:React.Key) => void
 }
 
 const Notice: React.FC<NoticeProps> = (props) => {
-  const { content, prefixCls, duration = 3000, onClose } = props
+  const { content, prefixCls, noticeKey, className, duration = 3000, onClose } = props
   let timer: number = 0
   let closeTimer: number | null = null
 
@@ -22,6 +23,7 @@ const Notice: React.FC<NoticeProps> = (props) => {
   })
 
   const startCloserTimer = () => {
+    console.log(duration)
     if (duration) {
       closeTimer = window.setTimeout(() => {
         close()
@@ -33,8 +35,9 @@ const Notice: React.FC<NoticeProps> = (props) => {
     clearCloseTimer()
 
     timer = window.setTimeout(() => {
+      console.log(onClose)
       if (onClose) {
-        onClose()
+        onClose(noticeKey)
       }
       clearTimeout(timer)
     }, 300)
@@ -47,7 +50,7 @@ const Notice: React.FC<NoticeProps> = (props) => {
     }
   }
 
-  const classes = classNames(`${prefixCls}-notice`)
+  const classes = classNames(`${prefixCls}-notice`, className)
   return <div className={classes}>{content}</div>
 }
 

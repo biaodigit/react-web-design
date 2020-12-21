@@ -6,9 +6,17 @@ import Message from './components/message/Message'
 import './styles/index.scss'
 
 const App = () => {
+  const handleMessage = () => {
+   Message.info('message', 2000)
+    // setTimeout(() => {
+    //   hide()
+    // }, 2000)
+  }
   return (
     <div style={{ margin: '200px 600px' }}>
-      <Button type="primary" onClick={() => Message.info('message', 0)}>message</Button>
+      <Button type="primary" onClick={handleMessage}>
+        message
+      </Button>
     </div>
   )
 }

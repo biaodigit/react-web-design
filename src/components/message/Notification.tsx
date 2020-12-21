@@ -20,12 +20,11 @@ interface NotificationState {
   notices: { notice: NoticeContent }[]
 }
 
-export interface NoticeContent
-  extends Omit<NoticeProps, 'prefixCls' | 'duration' | 'onClose'> {
+export interface NoticeContent extends Omit<NoticeProps, 'prefixCls' | 'noticeKey' | 'onClose'> {
   prefixCls?: string
   duration?: number
   key?: React.Key
-  onClose?: () => void
+  onClose?: () => void;
 }
 
 let noticeNumber = 0
@@ -59,18 +58,22 @@ class Notification extends React.Component<
       ...originNotice,
       key
     }
-    const { notices } = this.state
-    const idx = notices.map((v) => v.notice.key).indexOf(key)
-    const updateNotices = notices.concat()
-    if (idx !== -1) {
-      updateNotices.splice(idx, 1, { notice })
-    } else {
-      updateNotices.push({ notice })
-    }
-    this.setState({ notices: updateNotices })
+
+    this.setState((prevState) => {
+      const { notices } = prevState
+      const idx = notices.map((v) => v.notice.key).indexOf(key)
+      const updateNotices = notices.concat()
+      if (idx !== -1) {
+        updateNotices.splice(idx, 1, { notice })
+      } else {
+        updateNotices.push({ notice })
+      }
+      return { notices: updateNotices }
+    })
   }
 
-  public remove(removeKey: React.Key) {
+  public remove (removeKey: React.Key) {
+    console.log(removeKey, this.state.notices)
     this.setState(({ notices }) => ({
       notices: notices.filter(({ notice: { key } }) => key !== removeKey)
     }))
@@ -79,20 +82,20 @@ class Notification extends React.Component<
   private getNoticeDom() {
     const { notices } = this.state
     const { prefixCls } = this.props
-    return notices.map((v) => {
+    return notices.map(({ notice }) => {
+      const { key } = notice 
       const noticeProps = {
         prefixCls,
-        ...v.notice
+        noticeKey: key,
+        onClose: (key: React.Key) => {
+          console.log('key',key)
+          this.remove(key)
+          notice.onClose?.()
+        },
+        ...notice
       } as NoticeProps
 
-      const closeCb = () => {
-        this.remove(v.notice.key!)
-        if (v.notice.onClose) {
-          v.notice.onClose()
-        }
-      }
-
-      return <Notice {...noticeProps} onClose={closeCb} />
+      return <Notice {...noticeProps} />
     })
   }
   public render() {
