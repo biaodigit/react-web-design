@@ -4,28 +4,45 @@ import Notification, {
   NotificationInstance,
   NoticeContent
 } from './Notification'
+import LoadingOutlined from '@ant-design/icons/LoadingOutlined'
+import ExclamationCircleFilled from '@ant-design/icons/ExclamationCircleFilled'
+import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled'
+import CheckCircleFilled from '@ant-design/icons/CheckCircleFilled'
+import InfoCircleFilled from '@ant-design/icons/InfoCircleFilled'
 
 type ConfigContent = React.ReactNode | string
 type ConfigDuration = number | (() => void)
 type ConfigOnClose = () => void
 type JoinContent = ConfigContent | ArgProps
 
+type NoticeType = 'info' | 'success' | 'error' | 'warning' | 'loading'
+
 const localPrefixCls = 'web-message'
-let key = 1;
+let messageNotification: NotificationInstance | null
+let key = 1
+
+const typeToIcon = {
+  info: InfoCircleFilled,
+  success: CheckCircleFilled,
+  error: CloseCircleFilled,
+  warning: ExclamationCircleFilled,
+  loading: LoadingOutlined
+}
 
 interface ArgProps {
-  content: React.ReactNode
+  content: React.ReactNode | string
+  type: NoticeType
   duration?: number
   prefixCls?: string
-  key?:string | number
+  key?: string | number
   onClose?: () => void
 }
 
-interface MessageType {
-  ():void
+interface MessageType extends PromiseLike<any> {
+  (): void
 }
 
-interface MessageApi {
+interface MessageInstance {
   info(
     content: JoinContent,
     duration?: ConfigDuration,
@@ -52,10 +69,20 @@ interface MessageApi {
     onClose?: ConfigOnClose
   ): MessageType
   open(args: ArgProps): MessageType
-  destroy(messageKey: React.Key): void
+  destroy(messageKey?: React.Key): void
 }
 
-let messageNotification: NotificationInstance | null
+interface MessageApi extends MessageInstance {
+  warn(
+    content: JoinContent,
+    duration?: ConfigDuration,
+    onClose?: ConfigOnClose
+  ): MessageType
+}
+
+export interface ThenableArgument {
+  (val: any): void
+}
 
 function isArgsProps(content: JoinContent): content is ArgProps {
   return (
@@ -66,11 +93,11 @@ function isArgsProps(content: JoinContent): content is ArgProps {
 
 const getNotificationInstance = (
   args: ArgProps,
-  cb: (prefixCls: string, instance: NotificationInstance) => void
+  cb: (info: { prefixCls: string; instance: NotificationInstance }) => void
 ) => {
   let prefixCls = args.prefixCls || localPrefixCls
   if (messageNotification) {
-    cb(prefixCls, messageNotification)
+    cb({ prefixCls, instance: messageNotification })
     return
   }
 
@@ -78,17 +105,22 @@ const getNotificationInstance = (
     {
       prefixCls
     },
-    (instance: NotificationInstance) => cb && cb(prefixCls, instance)
+    (instance) => cb && cb({ prefixCls, instance })
   )
 }
 
 const getNoticeProps = (args: ArgProps, prefixCls: string): NoticeContent => {
   const duration = args.duration !== undefined ? args.duration : 3000
-  const classes = classNames(`${prefixCls}-content`, {})
+  const IconComponent = typeToIcon[args.type]
+  const classes = classNames(`${prefixCls}-content`, {
+    [`${prefixCls}-${args.type}`]: args.type
+  })
   return {
+    key: args.key,
     duration,
     content: (
       <div className={classes}>
+        {IconComponent && <IconComponent />}
         <span>{args.content}</span>
       </div>
     ),
@@ -98,17 +130,20 @@ const getNoticeProps = (args: ArgProps, prefixCls: string): NoticeContent => {
 
 const notice = (args: ArgProps) => {
   const target = args.key || key++
-  const closePromise = new Promise(resolve => {
+  const closePromise = new Promise((resolve) => {
     const callback = () => {
       if (typeof args.onClose === 'function') {
         args.onClose()
       }
       resolve(true)
     }
-  })
-  getNotificationInstance(args, (prefixCls, instance) => {
-    messageNotification = instance
-    instance.notice({ ...getNoticeProps(args, prefixCls), key: target })
+
+    getNotificationInstance(args, ({ prefixCls, instance }) => {
+      messageNotification = instance
+      instance.notice(
+        getNoticeProps({ ...args, key: target, onClose: callback }, prefixCls)
+      )
+    })
   })
 
   const result = () => {
@@ -117,12 +152,14 @@ const notice = (args: ArgProps) => {
     }
   }
 
+  result.then = (filled: ThenableArgument, rejected: ThenableArgument) =>
+    closePromise.then(filled, rejected)
   return result
 }
 
-const api = {
+const api: any = {
   open: notice,
-  destroy: (messageKey: React.Key) => {
+  destroy: (messageKey?: React.Key) => {
     if (messageNotification) {
       if (messageKey) {
         messageNotification.removeNotice(messageKey)
@@ -141,7 +178,7 @@ const attachTypeApi = (originApi: any, type: string) => {
     onClose?: ConfigOnClose
   ) => {
     if (isArgsProps(content)) {
-      originApi.open(content)
+      return originApi.open(content)
     }
 
     if (typeof duration === 'function') {
@@ -149,12 +186,14 @@ const attachTypeApi = (originApi: any, type: string) => {
       duration = undefined
     }
 
-    return originApi.open({ content, duration, onClose })
+    return originApi.open({ content, duration, onClose, type })
   }
 }
 
-;['info', 'success', 'warning', 'loading'].forEach((type) =>
+  ;['info', 'success', 'warning', 'error', 'loading'].forEach((type) =>
   attachTypeApi(api, type)
 )
+
+api.warn = api.warning
 
 export default api as MessageApi

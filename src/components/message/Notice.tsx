@@ -7,11 +7,12 @@ export interface NoticeProps {
   duration?: number | null
   prefixCls: string
   className?: string
-  onClose?: (key:React.Key) => void
+  onClose?: (key: React.Key) => void
+  // callback?: (key:React.Key) => void
 }
 
 const Notice: React.FC<NoticeProps> = (props) => {
-  const { content, prefixCls, noticeKey, className, duration = 3000, onClose } = props
+  const { content, prefixCls, noticeKey, className, duration = 3000, onClose = () => {}} = props
   let timer: number = 0
   let closeTimer: number | null = null
 
@@ -23,7 +24,6 @@ const Notice: React.FC<NoticeProps> = (props) => {
   })
 
   const startCloserTimer = () => {
-    console.log(duration)
     if (duration) {
       closeTimer = window.setTimeout(() => {
         close()
@@ -35,7 +35,6 @@ const Notice: React.FC<NoticeProps> = (props) => {
     clearCloseTimer()
 
     timer = window.setTimeout(() => {
-      console.log(onClose)
       if (onClose) {
         onClose(noticeKey)
       }

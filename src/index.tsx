@@ -7,10 +7,10 @@ import './styles/index.scss'
 
 const App = () => {
   const handleMessage = () => {
-   Message.info('message', 2000)
-    // setTimeout(() => {
-    //   hide()
-    // }, 2000)
+    // Message.info('message', 3000).then().then(() => {
+    //   console.log(1)
+    // })
+    Message.loading('success',0)
   }
   return (
     <div style={{ margin: '200px 600px' }}>

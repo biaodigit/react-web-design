@@ -73,7 +73,6 @@ class Notification extends React.Component<
   }
 
   public remove (removeKey: React.Key) {
-    console.log(removeKey, this.state.notices)
     this.setState(({ notices }) => ({
       notices: notices.filter(({ notice: { key } }) => key !== removeKey)
     }))
@@ -84,20 +83,21 @@ class Notification extends React.Component<
     const { prefixCls } = this.props
     return notices.map(({ notice }) => {
       const { key } = notice 
+
       const noticeProps = {
+        ...notice,
         prefixCls,
         noticeKey: key,
         onClose: (key: React.Key) => {
-          console.log('key',key)
           this.remove(key)
           notice.onClose?.()
-        },
-        ...notice
+        }
       } as NoticeProps
 
-      return <Notice {...noticeProps} />
+      return <Notice {...noticeProps}/>
     })
   }
+
   public render() {
     const { prefixCls } = this.props
     const classes = classNames(prefixCls)
@@ -122,7 +122,8 @@ Notification.newInstance = (properties, callback) => {
       removeNotice(key) {
         notification.remove(key)
       },
-      destroy() {
+      destroy () {
+        console.log('destroy')
         ReactDOM.unmountComponentAtNode(div)
         if (div.parentNode) {
           div.parentNode.removeChild(div)
