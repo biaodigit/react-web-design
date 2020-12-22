@@ -10,7 +10,7 @@ const App = () => {
     // Message.info('message', 3000).then().then(() => {
     //   console.log(1)
     // })
-    Message.loading('success',0)
+    Message.error('success',0)
   }
   return (
     <div style={{ margin: '200px 600px' }}>

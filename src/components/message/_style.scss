@@ -26,27 +26,27 @@ $message-prefixCls: '#{$prefix}-message';
     }
   }
 
-  .#{$iconfont-css-prefix} {
+  svg {
     position: relative;
     top: 1px;
-    margin-right: 8px;
+    margin-right: 5px;
     font-size: $font-size-base;
   }
 
-  &-info .#{$iconfont-css-prefix}{
-    color: $primary
+  &-info svg {
+    color: $primary;
   }
-  
-  &-success .#{$iconfont-css-prefix} {
+
+  &-success svg {
     color: $success;
   }
 
-  &-error .#{$iconfont-css-prefix}{
+  &-error svg {
     color: $danger;
   }
 
-  &-warning .#{$iconfont-css-prefix}{
-    color: $warning
+  &-warning svg {
+    color: $warning;
   }
 }
 

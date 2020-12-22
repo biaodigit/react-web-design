@@ -4,11 +4,8 @@ import Notification, {
   NotificationInstance,
   NoticeContent
 } from './Notification'
-import LoadingOutlined from '@ant-design/icons/LoadingOutlined'
-import ExclamationCircleFilled from '@ant-design/icons/ExclamationCircleFilled'
-import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled'
-import CheckCircleFilled from '@ant-design/icons/CheckCircleFilled'
-import InfoCircleFilled from '@ant-design/icons/InfoCircleFilled'
+// import LoadingOutlined from '@ant-design/icons/LoadingOutlined'
+import Icon from '../icon/Icon'
 
 type ConfigContent = React.ReactNode | string
 type ConfigDuration = number | (() => void)
@@ -22,11 +19,10 @@ let messageNotification: NotificationInstance | null
 let key = 1
 
 const typeToIcon = {
-  info: InfoCircleFilled,
-  success: CheckCircleFilled,
-  error: CloseCircleFilled,
-  warning: ExclamationCircleFilled,
-  loading: LoadingOutlined
+  info: 'info-circle',
+  success: 'check-circle',
+  error: 'times-circle',
+  warning: 'exclamation-circle'
 }
 
 interface ArgProps {
@@ -111,7 +107,7 @@ const getNotificationInstance = (
 
 const getNoticeProps = (args: ArgProps, prefixCls: string): NoticeContent => {
   const duration = args.duration !== undefined ? args.duration : 3000
-  const IconComponent = typeToIcon[args.type]
+  const icon = typeToIcon[args.type]
   const classes = classNames(`${prefixCls}-content`, {
     [`${prefixCls}-${args.type}`]: args.type
   })
@@ -120,7 +116,7 @@ const getNoticeProps = (args: ArgProps, prefixCls: string): NoticeContent => {
     duration,
     content: (
       <div className={classes}>
-        {IconComponent && <IconComponent />}
+        <Icon icon={icon}/>
         <span>{args.content}</span>
       </div>
     ),
