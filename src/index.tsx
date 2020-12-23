@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Button from './components/button/Button'
-import Message from './components/message/Message'
+import message from './components/message/Message'
 import './styles/index.scss'
 
 const App = () => {
@@ -10,7 +10,9 @@ const App = () => {
     // Message.info('message', 3000).then().then(() => {
     //   console.log(1)
     // })
-    Message.info('success')
+    message.loading('loading', 2000).then(() => {
+      message.success('success', 0)
+    })
   }
   return (
     <div style={{ margin: '200px 600px' }}>

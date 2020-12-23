@@ -4,7 +4,6 @@ import Notification, {
   NotificationInstance,
   NoticeContent
 } from './Notification'
-// import LoadingOutlined from '@ant-design/icons/LoadingOutlined'
 import Icon from '../icon/Icon'
 
 type ConfigContent = React.ReactNode | string
@@ -13,6 +12,8 @@ type ConfigOnClose = () => void
 type JoinContent = ConfigContent | ArgProps
 
 type NoticeType = 'info' | 'success' | 'error' | 'warning' | 'loading'
+type IconType = 'info-circle' | 'check-circle' | 'times-circle' | 'exclamation-circle' | 'spinner'
+
 
 const localPrefixCls = 'web-message'
 let messageNotification: NotificationInstance | null
@@ -22,7 +23,8 @@ const typeToIcon = {
   info: 'info-circle',
   success: 'check-circle',
   error: 'times-circle',
-  warning: 'exclamation-circle'
+  warning: 'exclamation-circle',
+  loading: 'spinner'
 }
 
 interface ArgProps {
@@ -107,7 +109,7 @@ const getNotificationInstance = (
 
 const getNoticeProps = (args: ArgProps, prefixCls: string): NoticeContent => {
   const duration = args.duration !== undefined ? args.duration : 3000
-  const icon = typeToIcon[args.type]
+  const icon = typeToIcon[args.type] as IconType
   const classes = classNames(`${prefixCls}-content`, {
     [`${prefixCls}-${args.type}`]: args.type
   })
@@ -116,7 +118,7 @@ const getNoticeProps = (args: ArgProps, prefixCls: string): NoticeContent => {
     duration,
     content: (
       <div className={classes}>
-        <Icon icon={icon}/>
+        <Icon icon={icon} spin={args.type === 'loading'}/>
         <span>{args.content}</span>
       </div>
     ),
