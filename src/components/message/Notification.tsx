@@ -123,7 +123,6 @@ Notification.newInstance = (properties, callback) => {
         notification.remove(key)
       },
       destroy () {
-        console.log('destroy')
         ReactDOM.unmountComponentAtNode(div)
         if (div.parentNode) {
           div.parentNode.removeChild(div)
