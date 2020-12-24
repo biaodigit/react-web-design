@@ -9,10 +9,10 @@ Object {
         class="web-auto-complete"
       >
         <div
-          class="input-wrapper"
+          class="web-input-wrapper"
         >
           <input
-            class="input-inner"
+            class="web-input-inner"
             placeholder="auto-complete"
             value=""
           />
@@ -25,10 +25,10 @@ Object {
       class="web-auto-complete"
     >
       <div
-        class="input-wrapper"
+        class="web-input-wrapper"
       >
         <input
-          class="input-inner"
+          class="web-input-inner"
           placeholder="auto-complete"
           value=""
         />

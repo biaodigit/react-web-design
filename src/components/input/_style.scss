@@ -1,9 +1,9 @@
-.input-wrapper {
+.#{$prefix}-input-wrapper {
     display: flex;
     width: 100%;
     margin-bottom: 30px;
     position: relative;
-    .icon-wrapper {
+    .#{$prefix}-icon-wrapper {
         position: absolute;
         height: 100%;
         width: 35px;
@@ -17,7 +17,7 @@
             color: $input-placeholder-color;
         }
     }
-    .input-inner {
+    .#{$prefix}-input-inner {
         width: 100%;
         padding: $input-padding-y $input-padding-x;
         font-family: $input-font-family;
@@ -56,13 +56,13 @@
             opacity: 1;
         }
     }
-    .icon-wrapper + .input-inner {
+    .#{$prefix}-icon-wrapper + .#{$prefix}-input-inner {
         padding-right: 35px;
     }
 }
 
-.input-group-prepend-inner,
-.input-group-append-inner {
+.#{$prefix}-input-group-prepend-inner,
+.#{$prefix}-input-group-append-inner {
     display: flex;
     align-items: center;
     padding: $input-padding-y $input-padding-x;
@@ -78,27 +78,27 @@
     border-radius: $input-border-radius;
 }
 
-.input-group-append-inner + .btn {
+.#{$prefix}-input-group-append-inner + .btn {
     padding: 0;
     border: 0;
 }
-.input-group > .input-group-prepend-inner,
-.input-group.input-group-append > .input-inner {
+.#{$prefix}-input-group > .#{$prefix}-input-group-prepend-inner,
+.#{$prefix}-input-group.#{$prefix}-input-group-append > .#{$prefix}-input-inner {
     @include border-right-radius(0);
 }
 
-.input-group > .input-group-append-inner,
-.input-group.input-group-prepend > .input-inner {
+.#{$prefix}-input-group > .#{$prefix}-input-group-append-inner,
+.#{$prefix}-input-group.#{$prefix}-input-group-prepend > .#{$prefix}-input-inner {
     @include border-left-radius(0);
 }
 
-.input-size-small .input-inner {
+.#{$prefix}-input-size-small .#{$prefix}-input-inner {
     padding: $input-padding-y-sm $input-padding-x-sm;
     font-size: $input-font-size-sm;
     border-radius: $input-border-radius-sm;
 }
 
-.input-size-large .input-inner {
+.#{$prefix}-input-size-large .#{$prefix}-input-inner {
     padding: $input-padding-y-lg $input-padding-x-lg;
     font-size: $input-font-size-lg;
     border-radius: $input-border-radius-lg;

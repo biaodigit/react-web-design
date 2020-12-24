@@ -26,12 +26,12 @@ export const Input: FC<InputProps> = (props) => {
     ...rest
   } = props;
 
-  const classes = classNames('input-wrapper', className, {
-    [`input-size-${size}`]: size,
+  const classes = classNames('web-input-wrapper', className, {
+    [`web-input-size-${size}`]: size,
     'is-disabled': disabled,
-    'input-group': prepend || append,
-    'input-group-append': !!append,
-    'input-group-prepend': !!prepend,
+    'web-input-group': prepend || append,
+    'web-input-group-append': !!append,
+    'web-input-group-prepend': !!prepend,
   });
 
   const fixControlledValue = (value: any) => {
@@ -48,14 +48,14 @@ export const Input: FC<InputProps> = (props) => {
 
   return (
     <div className={classes} style={style}>
-      {prepend && <div className="input-group-prepend-inner">{prepend}</div>}
+      {prepend && <div className="web-input-group-prepend-inner">{prepend}</div>}
       {icon && (
-        <div className="icon-wrapper">
+        <div className="web-icon-wrapper">
           <Icon icon={icon} title={`title-${icon}`} />
         </div>
       )}
-      <input disabled={disabled} className="input-inner" {...rest} />
-      {append && <div className="input-group-append-inner">{append}</div>}
+      <input disabled={disabled} className="web-input-inner" {...rest} />
+      {append && <div className="web-input-group-append-inner">{append}</div>}
     </div>
   );
 };
