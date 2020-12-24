@@ -45,13 +45,17 @@ describe('test AutoComplete component', () => {
         wrapper = render(<AutoComplete {...testProps} />)
         inputNode = wrapper.getByPlaceholderText('auto-complete') as HTMLInputElement
     })
+  
+    it('render snapshot', () => {
+        expect(wrapper).toMatchSnapshot()  
+    })
 
     it('test basic auto complete ', async () => {
         fireEvent.change(inputNode, { target: { value: 'a' } })
         await waitFor(() => {
             expect(wrapper.queryByText('ab')).toBeInTheDocument()
         })
-        expect(wrapper.container.querySelectorAll('.suggestion-item').length).toEqual(2)
+        expect(wrapper.container.querySelectorAll('.web-suggestion-item').length).toEqual(2)
         fireEvent.click(wrapper.getByText('ab'))
         expect(testProps.onSelect).toHaveBeenCalledWith({ value: 'ab', number: 11 })
         expect(wrapper.queryByText('ab')).not.toBeInTheDocument()

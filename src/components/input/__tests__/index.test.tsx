@@ -8,6 +8,9 @@ const defaultProps: InputProps = {
 };
 
 describe('test Input component', () => {
+  it('render snapshot', () => {
+    expect(render(<Input {...defaultProps} />)).toMatchSnapshot()
+  })
   it('should render the correct default Input', () => {
     render(<Input {...defaultProps} />);
     const testNode = screen.getByPlaceholderText(

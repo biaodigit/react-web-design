@@ -96,9 +96,10 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     }
 
     const generateDropdown = () => (
-        <ul className="suggestion-list">
+      <ul className="web-suggestion-list">
+            {loading && <div className="web-suggestion-loading-icon"><Icon icon="spinner" spin /></div>}
             {suggestions.map((item, index) => {
-                const cnames = classNames('suggestion-item', {
+                const cnames = classNames('web-suggestion-item', {
                     'is-active': index === highlightIndex
                 })
                 return (
@@ -109,9 +110,8 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     )
 
     return (
-        <div className="auto-complete" ref={componentRef}>
+        <div className="web-auto-complete" ref={componentRef}>
             <Input value={inputValue} onChange={handleChange} onKeyDown={handleKeyDown} {...rest} />
-            {loading && <ul><Icon icon="spinner" spin /></ul>}
             {suggestions.length > 0 ? generateDropdown() : null}
         </div>
     )

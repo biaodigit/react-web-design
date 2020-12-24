@@ -1,7 +1,7 @@
-.auto-complete {
+.#{$prefix}-auto-complete {
     position: relative;
   }
-  .suggestion-list {
+  .#{$prefix}-suggestion-list {
     list-style:none;
     padding-left: 0;
     white-space: nowrap;
@@ -13,13 +13,13 @@
     border: $menu-border-width solid $menu-border-color;
     box-shadow: $submenu-box-shadow;
     width: 100%;
-    .suggstions-loading-icon {
+    .#{$prefix}-suggestions-loading-icon {
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 75px;
     }
-    .suggestion-item {
+    .#{$prefix}-suggestion-item {
       padding: $menu-item-padding-y $menu-item-padding-x;
       cursor: pointer;
       transition: $menu-transition;

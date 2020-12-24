@@ -10,6 +10,11 @@ describe('test Message component', () => {
     message.destroy()
   })
 
+  it('render snapshot', () => {
+    message.info('message', 0)
+    const element = document.querySelector(noticeCls)
+    expect(element).toMatchSnapshot()
+  })
   it('should render default message', () => {
     message.info('message', 0)
     const element = document.querySelector(noticeCls)

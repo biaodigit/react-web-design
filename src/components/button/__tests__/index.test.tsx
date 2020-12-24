@@ -29,7 +29,7 @@ describe('test Button component', () => {
     expect(element).toBeInTheDocument();
     expect(element.tagName).toEqual('BUTTON');
     expect(element.disabled).toBeFalsy();
-    expect(element).toHaveClass('btn btn-default');
+    expect(element).toHaveClass('web-btn web-btn-default');
     expect(element).toHaveStyle('marginLeft:10px');
     fireEvent.click(element);
     expect(defaultProps.onClick).toHaveBeenCalled();
@@ -40,7 +40,7 @@ describe('test Button component', () => {
     const element = wrapper.getByText('nice') as HTMLButtonElement;
     expect(element).toBeInTheDocument();
     expect(element.disabled).toBeFalsy();
-    expect(element).toHaveClass('btn btn-primary btn-large klass');
+    expect(element).toHaveClass('web-btn web-btn-primary web-btn-large klass');
   });
 
   it('should render a link when btnType equals link and href is provided', () => {
@@ -48,7 +48,7 @@ describe('test Button component', () => {
     const element = wrapper.getByText('link') as HTMLAnchorElement;
     expect(element).toBeInTheDocument();
     expect(element.tagName).toEqual('A');
-    expect(element).toHaveClass('btn btn-link');
+    expect(element).toHaveClass('web-btn web-btn-link');
   });
 
   it('should render disabled button when disabled set to true', () => {

@@ -76,6 +76,9 @@ describe('test Menu Component', () => {
     activeElement = wrapper.getByText('active');
     disabledElement = wrapper.getByText('disable');
   });
+  it('render snapshot', () => {
+    expect(wrapper).toMatchSnapshot()
+  })
   it('render default menu', () => {
     expect(menuElement).toBeInTheDocument();
     expect(menuElement).toHaveClass('menu test');
