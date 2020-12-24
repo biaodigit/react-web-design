@@ -38,9 +38,9 @@ export const Menu: FC<MenuProps> = (props) => {
     children,
   } = props;
   const [currentActive, setActive] = useState(defaultIndex);
-  const classes = classNames('menu', className, {
-    'menu-vertical': Object.is(mode, 'vertical'),
-    'menu-horizontal': Object.is(mode, 'horizontal'),
+  const classes = classNames('web-menu', className, {
+    'web-menu-vertical': Object.is(mode, 'vertical'),
+    'web-menu-horizontal': Object.is(mode, 'horizontal'),
   });
 
   const handleClick = (index: string) => {

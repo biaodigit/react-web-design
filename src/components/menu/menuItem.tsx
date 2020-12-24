@@ -13,7 +13,7 @@ const MenuItem: FC<MenuItemProps> = (props) => {
   const { index, disabled, className, style, children } = props;
   const context = useContext(MenuContext);
 
-  const classes = classNames('menu-item', className, {
+  const classes = classNames('web-menu-item', className, {
     'is-disabled': disabled,
     'is-active': Object.is(context.index, index),
   });

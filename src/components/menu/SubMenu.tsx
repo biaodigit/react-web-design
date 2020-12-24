@@ -20,7 +20,7 @@ export const SubMenu: React.FC<SubMenuProps> = (props) => {
       ? defaultOpenSubMenus.includes(index)
       : false;
   const [menuOpen, setOpen] = useState(isOpened);
-  const classes = classNames('menu-item submenu-item', className, {
+  const classes = classNames('web-menu-item web-submenu-item', className, {
     'is-active': Object.is(context.index, index),
     'is-opened': menuOpen,
     'is-vertical': Object.is(context.mode, 'vertical'),
@@ -40,8 +40,8 @@ export const SubMenu: React.FC<SubMenuProps> = (props) => {
   };
 
   const renderChildren = () => {
-    const subMenuClasses = classNames('submenu', {
-      'menu-opened': menuOpen,
+    const subMenuClasses = classNames('web-submenu', {
+      'web-menu-opened': menuOpen,
     });
     const childrenComponent = React.Children.map(children, (child, i) => {
       const childElement = child as FunctionComponentElement<MenuItemProps>;
@@ -75,7 +75,7 @@ export const SubMenu: React.FC<SubMenuProps> = (props) => {
     : {};
   return (
     <li key={index} className={classes} {...hoverEvents}>
-      <div className="submenu-title" {...clickEvents}>
+      <div className="web-submenu-title" {...clickEvents}>
         {title}
         <Icon icon="angle-down" className="arrow-icon" />
       </div>

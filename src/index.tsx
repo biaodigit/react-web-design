@@ -10,8 +10,8 @@ const App = () => {
     // Message.info('message', 3000).then().then(() => {
     //   console.log(1)
     // })
-    message.loading('loading', 2000).then(() => {
-      message.success('success', 0)
+    message.loading('web loading', 2000).then(() => {
+      message.success('web success', 0)
     })
   }
   return (

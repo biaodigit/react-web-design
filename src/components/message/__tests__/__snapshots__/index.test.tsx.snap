@@ -9,7 +9,7 @@ exports[`test Message component render snapshot 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="svg-inline--fa fa-info-circle fa-w-16 icon"
+      class="svg-inline--fa fa-info-circle fa-w-16 web-icon"
       data-icon="info-circle"
       data-prefix="fas"
       focusable="false"

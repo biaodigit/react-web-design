@@ -56,10 +56,10 @@ const generateMenu = (props: MenuProps) => (
 
 const createStyleFile = () => {
   const cssFile: string = `
-     .submenu {
+     .web-submenu {
        display:none
      }
-     .submenu.menu-opened {
+     .web-submenu.web-menu-opened {
        display:block
      }
   `;
@@ -81,10 +81,10 @@ describe('test Menu Component', () => {
   })
   it('render default menu', () => {
     expect(menuElement).toBeInTheDocument();
-    expect(menuElement).toHaveClass('menu test');
+    expect(menuElement).toHaveClass('web-menu test');
     expect(menuElement.querySelectorAll(':scope > li').length).toEqual(5);
-    expect(activeElement).toHaveClass('menu-item is-active');
-    expect(disabledElement).toHaveClass('menu-item is-disabled');
+    expect(activeElement).toHaveClass('web-menu-item is-active');
+    expect(disabledElement).toHaveClass('web-menu-item is-disabled');
   });
 
   it('click items should change active and call the right callback', () => {
@@ -122,7 +122,7 @@ describe('test Menu and MenuItem component in vertical mode', () => {
   });
 
   it('should render vertical mode when mode is set to vertical', () => {
-    expect(menuElement).toHaveClass('menu-vertical');
+    expect(menuElement).toHaveClass('web-menu-vertical');
   });
 
   it('should show dropdown items when click on subMenu for vertical mode', () => {

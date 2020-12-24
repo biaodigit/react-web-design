@@ -6,29 +6,29 @@ Object {
   "baseElement": <body>
     <div>
       <ul
-        class="menu test menu-horizontal"
+        class="web-menu test web-menu-horizontal"
         data-testid="test-menu"
       >
         <li
-          class="menu-item is-active"
+          class="web-menu-item is-active"
         >
           active
         </li>
         <li
-          class="menu-item is-disabled"
+          class="web-menu-item is-disabled"
         >
           disable
         </li>
         <li
-          class="menu-item"
+          class="web-menu-item"
         >
           default
         </li>
         <li
-          class="menu-item submenu-item"
+          class="web-menu-item web-submenu-item"
         >
           <div
-            class="submenu-title"
+            class="web-submenu-title"
           >
             dropdown
             <i
@@ -36,20 +36,20 @@ Object {
             />
           </div>
           <ul
-            class="submenu"
+            class="web-submenu"
           >
             <li
-              class="menu-item"
+              class="web-menu-item"
             >
               dropdown1
             </li>
           </ul>
         </li>
         <li
-          class="menu-item submenu-item"
+          class="web-menu-item web-submenu-item"
         >
           <div
-            class="submenu-title"
+            class="web-submenu-title"
           >
             opened
             <i
@@ -57,10 +57,10 @@ Object {
             />
           </div>
           <ul
-            class="submenu"
+            class="web-submenu"
           >
             <li
-              class="menu-item"
+              class="web-menu-item"
             >
               opened2
             </li>
@@ -69,10 +69,10 @@ Object {
       </ul>
       <style>
         
-     .submenu {
+     .web-submenu {
        display:none
      }
-     .submenu.menu-opened {
+     .web-submenu.web-menu-opened {
        display:block
      }
   
@@ -81,29 +81,29 @@ Object {
   </body>,
   "container": <div>
     <ul
-      class="menu test menu-horizontal"
+      class="web-menu test web-menu-horizontal"
       data-testid="test-menu"
     >
       <li
-        class="menu-item is-active"
+        class="web-menu-item is-active"
       >
         active
       </li>
       <li
-        class="menu-item is-disabled"
+        class="web-menu-item is-disabled"
       >
         disable
       </li>
       <li
-        class="menu-item"
+        class="web-menu-item"
       >
         default
       </li>
       <li
-        class="menu-item submenu-item"
+        class="web-menu-item web-submenu-item"
       >
         <div
-          class="submenu-title"
+          class="web-submenu-title"
         >
           dropdown
           <i
@@ -111,20 +111,20 @@ Object {
           />
         </div>
         <ul
-          class="submenu"
+          class="web-submenu"
         >
           <li
-            class="menu-item"
+            class="web-menu-item"
           >
             dropdown1
           </li>
         </ul>
       </li>
       <li
-        class="menu-item submenu-item"
+        class="web-menu-item web-submenu-item"
       >
         <div
-          class="submenu-title"
+          class="web-submenu-title"
         >
           opened
           <i
@@ -132,10 +132,10 @@ Object {
           />
         </div>
         <ul
-          class="submenu"
+          class="web-submenu"
         >
           <li
-            class="menu-item"
+            class="web-menu-item"
           >
             opened2
           </li>
@@ -144,10 +144,10 @@ Object {
     </ul>
     <style>
       
-     .submenu {
+     .web-submenu {
        display:none
      }
-     .submenu.menu-opened {
+     .web-submenu.web-menu-opened {
        display:block
      }
   
