@@ -18,7 +18,7 @@ $message-prefixCls: '#{$prefix}-message';
     background-color: #fff;
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48),
       0 6px 12px 0 rgba(0, 0, 0, 0.32);
-    animation-name: zoomIn;
+    animation-name: web-move-up-in;
     animation-duration: 0.3s;
     .#{$message-prefixCls}-content {
       display: flex;
@@ -27,6 +27,10 @@ $message-prefixCls: '#{$prefix}-message';
       span {
         font-size: 14px;
       }
+    }
+    &.move-up-leave {
+      animation-name: web-move-up-out;
+      animation-duration: 0.3s;
     }
   }
 

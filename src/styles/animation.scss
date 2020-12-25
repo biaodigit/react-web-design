@@ -1,4 +1,40 @@
-@include zoom-animation("top", scaleY(0), scaleY(1), center top);
-@include zoom-animation("left", scale(0.45, 0.45), scale(1, 1), top left);
-@include zoom-animation("right", scale(0.45, 0.45), scale(1, 1), top right);
-@include zoom-animation("bottom", scaleY(0), scaleY(1), center bottom);
+@include zoom-animation('top', scaleY(0), scaleY(1), center top);
+@include zoom-animation('left', scale(0.45, 0.45), scale(1, 1), top left);
+@include zoom-animation('right', scale(0.45, 0.45), scale(1, 1), top right);
+@include zoom-animation('bottom', scaleY(0), scaleY(1), center bottom);
+
+@keyframes web-move-up-in {
+  0% {
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  to {
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes web-move-up-out {
+  0% {
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    // -webkit-transform: translateY(-100%);
+    // transform: translateY(-100%);
+    opacity: 0;
+  }
+}

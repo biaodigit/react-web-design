@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import Notification, {
   NotificationInstance,
   NoticeContent
-} from './Notification'
+} from '../notification/Notification'
 import Icon from '../icon/Icon'
 
 type ConfigContent = React.ReactNode | string

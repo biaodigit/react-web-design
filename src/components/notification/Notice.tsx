@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import classNames from 'classnames'
 
 export interface NoticeProps {
@@ -8,17 +8,25 @@ export interface NoticeProps {
   prefixCls: string
   className?: string
   onClose?: (key: React.Key) => void
-  // callback?: (key:React.Key) => void
 }
 
 const Notice: React.FC<NoticeProps> = (props) => {
-  const { content, prefixCls, noticeKey, className, duration = 3000, onClose = () => {}} = props
+  const [leave,setLeave] = useState(false)
+  const {
+    content,
+    prefixCls,
+    noticeKey,
+    className,
+    duration = 3000,
+    onClose = () => {}
+  } = props
   let timer: number = 0
   let closeTimer: number | null = null
 
   useEffect(() => {
     startCloserTimer()
     return () => {
+      // setLeave(false)
       clearCloseTimer()
     }
   })
@@ -33,7 +41,7 @@ const Notice: React.FC<NoticeProps> = (props) => {
 
   const close = () => {
     clearCloseTimer()
-
+    setLeave(true)
     timer = window.setTimeout(() => {
       if (onClose) {
         onClose(noticeKey)
@@ -53,4 +61,4 @@ const Notice: React.FC<NoticeProps> = (props) => {
   return <div className={classes}>{content}</div>
 }
 
-export default Notice;
+export default Notice
