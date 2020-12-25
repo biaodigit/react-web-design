@@ -18,8 +18,6 @@ $message-prefixCls: '#{$prefix}-message';
     background-color: #fff;
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48),
       0 6px 12px 0 rgba(0, 0, 0, 0.32);
-    animation-name: web-move-up-in;
-    animation-duration: 0.3s;
     .#{$message-prefixCls}-content {
       display: flex;
       align-items: center;
@@ -28,9 +26,14 @@ $message-prefixCls: '#{$prefix}-message';
         font-size: 14px;
       }
     }
+    &.move-up-enter {
+      animation-name: web-move-up-in;
+      animation-duration: 0.3s;
+    }
     &.move-up-leave {
       animation-name: web-move-up-out;
       animation-duration: 0.3s;
+      animation-fill-mode: forwards;
     }
   }
 
@@ -55,27 +58,5 @@ $message-prefixCls: '#{$prefix}-message';
 
   &-warning svg {
     color: $warning;
-  }
-}
-
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    -webkit-transform: scale3d(0, 0, 0.3);
-    transform: scale3d(0, 0, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes zoomOut {
-  from {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-    -webkit-transform: scale3d(-0.3, 0, -0.3);
-    transform: scale3d(-0.3, 0, -0.3);
   }
 }

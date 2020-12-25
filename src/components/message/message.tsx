@@ -116,6 +116,7 @@ const getNoticeProps = (args: ArgProps, prefixCls: string): NoticeContent => {
   return {
     key: args.key,
     duration,
+    className: "move-up",
     content: (
       <div className={classes}>
         <Icon icon={icon} spin={args.type === 'loading'}/>

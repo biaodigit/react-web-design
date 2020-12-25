@@ -11,7 +11,7 @@ export interface NoticeProps {
 }
 
 const Notice: React.FC<NoticeProps> = (props) => {
-  const [leave,setLeave] = useState(false)
+  const [leave, setLeave] = useState(false)
   const {
     content,
     prefixCls,
@@ -52,12 +52,16 @@ const Notice: React.FC<NoticeProps> = (props) => {
 
   const clearCloseTimer = () => {
     if (closeTimer) {
+      setLeave(false)
       clearTimeout(closeTimer)
       closeTimer = null
     }
   }
 
-  const classes = classNames(`${prefixCls}-notice`, className)
+  const classes = classNames(`${prefixCls}-notice`, {
+    [`${className}-enter`]: !leave,
+    [`${className}-leave`]: leave
+  })
   return <div className={classes}>{content}</div>
 }
 
