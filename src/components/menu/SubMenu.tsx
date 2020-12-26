@@ -69,9 +69,9 @@ export const SubMenu: React.FC<SubMenuProps> = (props) => {
 
   const hoverEvents = !Object.is(context.mode, 'vertical')
     ? {
-        onMouseEnter: (e: React.MouseEvent) => handleMouse(e, true),
-        onMouseLeave: (e: React.MouseEvent) => handleMouse(e, false),
-      }
+      onMouseEnter: (e: React.MouseEvent) => handleMouse(e, true),
+      onMouseLeave: (e: React.MouseEvent) => handleMouse(e, false),
+    }
     : {};
   return (
     <li key={index} className={classes} {...hoverEvents}>
