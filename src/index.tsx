@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Button from './components/button/Button'
-import message from './components/message/Message'
+import message from './components/message'
 import Menu from './components/menu'
 import './styles/index.scss'
 

@@ -1,4 +1,4 @@
-import React, { useContext, useState, FunctionComponentElement } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
 import Transition from '../transition';
 import Icon from '../icon/Icon';
@@ -44,7 +44,7 @@ export const SubMenu: React.FC<SubMenuProps> = (props) => {
       'web-menu-opened': menuOpen,
     });
     const childrenComponent = React.Children.map(children, (child, i) => {
-      const childElement = child as FunctionComponentElement<MenuItemProps>;
+      const childElement = child as React.FunctionComponentElement<MenuItemProps>;
       const { displayName } = childElement.type;
       if (displayName === 'MenuItem') {
         return React.cloneElement(childElement, {

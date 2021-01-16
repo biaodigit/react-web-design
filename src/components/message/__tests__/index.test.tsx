@@ -1,4 +1,4 @@
-import message from '../Message'
+import message from '../index'
 
 const noticeCls = '.web-message-notice'
 describe('test Message component', () => {
@@ -53,7 +53,7 @@ describe('test Message component', () => {
   })
 
   it('should render different type message', () => {
-    message.info('info',0)
+    message.info('info', 0)
     message.success('success', 0)
     message.error('error', 0)
     message.warning('warning', 0)

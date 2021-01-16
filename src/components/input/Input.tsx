@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, InputHTMLAttributes } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import Icon from '../icon/Icon';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -6,15 +6,15 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 type InputSize = 'small' | 'large';
 
 export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLElement>, 'size'> {
+  extends Omit<React.InputHTMLAttributes<HTMLElement>, 'size'> {
   disabled?: boolean;
   size?: InputSize;
   icon?: IconProp;
-  prepend?: string | ReactElement;
-  append?: string | ReactElement;
+  prepend?: string | React.ReactElement;
+  append?: string | React.ReactElement;
 }
 
-export const Input: FC<InputProps> = (props) => {
+export const Input: React.FC<InputProps> = (props) => {
   const {
     disabled,
     size,

@@ -1,11 +1,11 @@
-import { FC } from 'react'
+import React from 'react'
 import Menu, { MenuProps } from './Menu';
 import SubMenu, { SubMenuProps } from './SubMenu';
 import Item, { MenuItemProps } from './MenuItem';
 
-export type IMenuComponent = FC<MenuProps> & {
-  Item: FC<MenuItemProps>
-  SubMenu: FC<SubMenuProps>
+export type IMenuComponent = React.FC<MenuProps> & {
+  Item: React.FC<MenuItemProps>
+  SubMenu: React.FC<SubMenuProps>
 }
 
 const TransMenu = Menu as IMenuComponent

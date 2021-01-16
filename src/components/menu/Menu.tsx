@@ -1,4 +1,4 @@
-import React, { useState, FC, CSSProperties } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import { SubMenuProps } from './SubMenu';
 import { MenuItemProps } from './MenuItem';
@@ -10,7 +10,7 @@ export interface MenuProps {
     defaultIndex?: string;
     className?: string;
     mode?: MenuMode;
-    style?: CSSProperties;
+    style?: React.CSSProperties;
     onSelect?: SelectCallback;
     defaultOpenSubMenus?: string[];
 }
@@ -27,7 +27,7 @@ export const MenuContext = React.createContext<IMenuContext>({ index: '0' });
 /**
  * ## Menu 组件
  */
-export const Menu: FC<MenuProps> = (props) => {
+export const Menu: React.FC<MenuProps> = (props) => {
     const {
         defaultIndex,
         className,

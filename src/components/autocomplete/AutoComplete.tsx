@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef, ChangeEvent, KeyboardEvent, ReactElement } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import Input, { InputProps } from '../input/Input'
 import Icon from '../icon/Icon'
@@ -14,11 +14,11 @@ export type DataSourceType<T = {}> = T & DataSourceObject
 export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
     fetchSuggestions: (str: string) => DataSourceType[] | Promise<DataSourceType[]>
     onSelect?: (item: DataSourceType) => void
-    renderOption?: (item: DataSourceType) => ReactElement
+    renderOption?: (item: DataSourceType) => React.ReactElement
 }
 
 
-const AutoComplete: FC<AutoCompleteProps> = (props) => {
+const AutoComplete: React.FC<AutoCompleteProps> = (props) => {
     const { fetchSuggestions, onSelect, renderOption, value, ...rest } = props
     const [inputValue, setInputValue] = useState<string>(value as string)
     const [suggestions, setSuggestions] = useState<DataSourceType[]>([])
@@ -46,9 +46,9 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
             setSuggestions([])
         }
         setHighlightIndex(-1)
-    }, [debounceValue])
+    }, [debounceValue, fetchSuggestions])
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
         setInputValue(value)
         triggerSearch.current = true
@@ -69,7 +69,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
         setHighlightIndex(index)
     }
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         switch (e.keyCode) {
             case 13:
                 if (suggestions[highlightIndex]) {
@@ -96,7 +96,7 @@ const AutoComplete: FC<AutoCompleteProps> = (props) => {
     }
 
     const generateDropdown = () => (
-      <ul className="web-suggestion-list">
+        <ul className="web-suggestion-list">
             {loading && <div className="web-suggestion-loading-icon"><Icon icon="spinner" spin /></div>}
             {suggestions.map((item, index) => {
                 const cnames = classNames('web-suggestion-item', {

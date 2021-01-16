@@ -1,9 +1,4 @@
-import React, {
-    FC,
-    MouseEventHandler,
-    ButtonHTMLAttributes,
-    AnchorHTMLAttributes,
-} from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 export type ButtonType = 'primary' | 'default' | 'danger' | 'link';
@@ -19,21 +14,21 @@ interface BaseButtonProps {
 }
 
 type AnchorButtonProps = {
-    onClick?: MouseEventHandler<HTMLElement>;
+    onClick?: React.MouseEventHandler<HTMLElement>;
 } & BaseButtonProps &
-    Omit<AnchorHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
+    Omit<React.AnchorHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
 
 type NativeButtonProps = {
-    onClick?: MouseEventHandler<HTMLElement>;
+    onClick?: React.MouseEventHandler<HTMLElement>;
 } & BaseButtonProps &
-    Omit<ButtonHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
+    Omit<React.ButtonHTMLAttributes<HTMLElement>, 'type' | 'onClick'>;
 
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
 
 /**
  * ## Button组件
  */
-export const Button: FC<ButtonProps> = (props) => {
+export const Button: React.FC<ButtonProps> = (props) => {
     const {
         className,
         disabled,
